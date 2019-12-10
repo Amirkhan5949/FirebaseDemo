@@ -4,13 +4,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class PostListActivity extends AppCompatActivity {
     private   RecyclerView recyclerView;
+    private FloatingActionButton add;
     PostAdapter adapter;
 
 
@@ -21,12 +25,20 @@ public class PostListActivity extends AppCompatActivity {
 
         recyclerView=findViewById(R.id.recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        add=findViewById(R.id.add);
 
-        FirebaseRecyclerOptions<Post> options =
-                new FirebaseRecyclerOptions.Builder<Post>()
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(PostListActivity.this,MainActivity.class));
+            }
+        });
+
+        FirebaseRecyclerOptions<Post> options = new FirebaseRecyclerOptions.Builder<Post>()
                         .setQuery(FirebaseDatabase.getInstance().getReference().child("Post"), Post.class)
                         .build();
-        adapter=new PostAdapter(options);
+
+        adapter = new PostAdapter(options,this);
         recyclerView.setAdapter(adapter);
 
 
