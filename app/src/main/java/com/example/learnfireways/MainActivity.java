@@ -21,6 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
     private EditText title,discription,author;
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
                      public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                          String post="Title :"+dataSnapshot.child("Title").getValue(String.class)+"\n"+"Description :"
                                  +dataSnapshot.child("discription").getValue(String.class)+"\n"+
-                                 "Author :"+dataSnapshot.child("author").getValue(String.class);
+                                 "Author :"+dataSnapshot.child("author").getValue(String.class)+dataSnapshot.child("Like").getValue(int.class)+"\n"+"Like";
                          text.setText(post);
                      }
 
@@ -72,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         map.put("Title",title.getText().toString());
         map.put("discription",discription.getText().toString());
         map.put("author",author.getText().toString());
+        map.put("Like",new Random().nextInt(900)+100);
 
       post.push()
                 .setValue(map)

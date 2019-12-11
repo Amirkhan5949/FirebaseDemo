@@ -4,6 +4,7 @@ public class Post {
    String Title;
    String author;
    String discription;
+   int Like;
 
     public Post() {
     }
